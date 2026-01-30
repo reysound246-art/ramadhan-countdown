@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hitung Mundur Ramadhan</title>
+  <style>
+    body{
+      margin:0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      text-align:center;
+    }
+    .card{
+      background: rgba(255,255,255,0.08);
+      padding:30px 40px;
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.4);
+      max-width:420px;
+      width:100%;
+    }
+    h1{
+      margin-bottom:10px;
+      font-size:28px;
+    }
+    .arab{
+      font-size:22px;
+      margin-bottom:20px;
+    }
+    .countdown{
+      display:grid;
+      grid-template-columns: repeat(4,1fr);
+      gap:12px;
+      margin-top:20px;
+    }
+    .box{
+      background: rgba(0,0,0,0.35);
+      border-radius:12px;
+      padding:12px 5px;
+    }
+    .number{
+      font-size:26px;
+      font-weight:bold;
+    }
+    .label{
+      font-size:12px;
+      opacity:0.85;
+    }
+    footer{
+      margin-top:20px;
+      font-size:12px;
+      opacity:0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="arab">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <h1>Menuju Ramadhan</h1>
+    <p>Hitung mundur menjelang awal puasa Ramadhan</p><div class="countdown">
+  <div class="box">
+    <div class="number" id="days">0</div>
+    <div class="label">Hari</div>
+  </div>
+  <div class="box">
+    <div class="number" id="hours">0</div>
+    <div class="label">Jam</div>
+  </div>
+  <div class="box">
+    <div class="number" id="minutes">0</div>
+    <div class="label">Menit</div>
+  </div>
+  <div class="box">
+    <div class="number" id="seconds">0</div>
+    <div class="label">Detik</div>
+  </div>
+</div>
+
+<footer>
+  © 2026 | Ramadhan Countdown
+</footer>
+
+  </div><script>
+  // ===============================
+  // OTOMATIS ZONA WAKTU INDONESIA
+  // ===============================
+  // WIB  : UTC+7
+  // WITA : UTC+8
+  // WIT  : UTC+9
+
+  // Deteksi zona waktu pengguna
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  let offsetHours = 7; // default WIB
+  let zonaLabel = "WIB";
+
+  if(userTimeZone.includes("Makassar") || userTimeZone.includes("Bali")){
+    offsetHours = 8;
+    zonaLabel = "WITA";
+  } else if(userTimeZone.includes("Jayapura")){
+    offsetHours = 9;
+    zonaLabel = "WIT";
+  }
+
+  // Tanggal awal Ramadhan (lokal Indonesia)
+  function getRamadhanTime(){
+    const ramadhanUTC = Date.UTC(2026, 2, 1, 0, 0, 0); // 1 Maret 2026
+    return ramadhanUTC - (offsetHours * 60 * 60 * 1000);
+  }
+
+  function updateCountdown(){
+    const now = new Date().getTime();
+    const distance = getRamadhanTime() - now;
+
+    if(distance <= 0){
+      document.querySelector('.countdown').innerHTML = <h2>Marhaban ya Ramadhan 🌙<br><small>Zona ${zonaLabel}</small></h2>;
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = hours;
+    document.getElementById("minutes").innerText = minutes;
+    document.getElementById("seconds").innerText = seconds;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown,1000);
+</script></body>
+</html>
