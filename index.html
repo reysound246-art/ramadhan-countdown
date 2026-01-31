@@ -146,5 +146,31 @@
 
   updateCountdown();
   setInterval(updateCountdown,1000);
-</script></body>
+
+<script>
+  // ===============================
+  // Countdown
+  // ===============================
+  updateCountdown();
+  setInterval(updateCountdown,1000);
+
+  // ===============================
+  // Musik autoplay
+  // ===============================
+  const music = document.getElementById('bgm');
+
+  // coba autoplay sekali ketika halaman dimuat (bisa gagal di beberapa browser)
+  music.play().catch(() => {
+    console.log("Autoplay diblok, tunggu interaksi user...");
+  });
+
+  // autoplay setelah klik/tap halaman
+  document.addEventListener('click', () => {
+    if (music.paused) {
+      music.play();
+    }
+  });
+</script>
+</body>
 </html>
+
