@@ -14,49 +14,54 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
+  min-height:100vh;
   text-align:center;
 }
 
 .card{
   background:rgba(255,255,255,0.08);
-  padding:30px 40px;
+  padding:28px 22px;
   border-radius:16px;
   box-shadow:0 10px 30px rgba(0,0,0,0.4);
   max-width:420px;
-  width:100%;
+  width:92%;
 }
 
 .logo{
   width:90px;
-  margin-bottom:15px;
-}
-
-h1{
-  font-size:28px;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 
 .arab{
   font-size:22px;
-  margin-bottom:20px;
+  margin-bottom:12px;
+}
+
+h1{
+  font-size:26px;
+  margin-bottom:6px;
+}
+
+p{
+  font-size:14px;
+  opacity:0.9;
 }
 
 .countdown{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-top:20px;
+  gap:10px;
+  margin-top:18px;
 }
 
 .box{
   background:rgba(0,0,0,0.35);
   border-radius:12px;
-  padding:12px 5px;
+  padding:12px 6px;
 }
 
 .number{
-  font-size:26px;
+  font-size:24px;
   font-weight:bold;
 }
 
@@ -66,33 +71,39 @@ h1{
 }
 
 footer{
-  margin-top:20px;
+  margin-top:16px;
   font-size:12px;
-  opacity:0.7;
+  opacity:0.75;
 }
 
-/* RUNNING TEXT DI DALAM CARD */
+/* RUNNING TEXT */
 .running-text{
   width:100%;
   background:rgba(0,0,0,0.35);
   overflow:hidden;
   white-space:nowrap;
-  margin-top:10px;
-  padding:6px 0;
+  margin-top:8px;
+  padding:8px 0;
   border-radius:8px;
-  font-size:11px;
+  font-size:13px; /* lebih besar */
 }
 
 .marquee{
   display:inline-block;
   padding-left:100%;
-  white-space:nowrap;
-  animation:jalan 25s linear infinite;
+  animation:jalan 22s linear infinite;
 }
 
 @keyframes jalan{
-  from{transform:translateX(0);}
-  to{transform:translateX(-100%);}
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-100%); }
+}
+
+/* RESPONSIF HP KECIL */
+@media(max-width:360px){
+  .number{font-size:20px;}
+  .arab{font-size:20px;}
+  h1{font-size:24px;}
 }
 </style>
 </head>
@@ -100,7 +111,7 @@ footer{
 <body>
 
 <div class="card">
-  <img src="logo-masjid-v2.jpg" class="logo" alt="Logo">
+  <img src="logo-masjid-v2.jpg" class="logo" alt="Logo Masjid">
 
   <!-- Musik -->
   <audio id="bgm" src="Ramadan1.mp3" loop></audio>
@@ -110,17 +121,28 @@ footer{
   <p>Hitung mundur menjelang awal puasa Ramadhan</p>
 
   <div class="countdown">
-    <div class="box"><div class="number" id="days">0</div><div class="label">Hari</div></div>
-    <div class="box"><div class="number" id="hours">0</div><div class="label">Jam</div></div>
-    <div class="box"><div class="number" id="minutes">0</div><div class="label">Menit</div></div>
-    <div class="box"><div class="number" id="seconds">0</div><div class="label">Detik</div></div>
+    <div class="box">
+      <div class="number" id="days">0</div>
+      <div class="label">Hari</div>
+    </div>
+    <div class="box">
+      <div class="number" id="hours">0</div>
+      <div class="label">Jam</div>
+    </div>
+    <div class="box">
+      <div class="number" id="minutes">0</div>
+      <div class="label">Menit</div>
+    </div>
+    <div class="box">
+      <div class="number" id="seconds">0</div>
+      <div class="label">Detik</div>
+    </div>
   </div>
 
   <footer>
     © 2026 | perkiraan-menuju-Ramadhan-ags tech
   </footer>
 
-  <!-- RUNNING TEXT -->
   <div class="running-text">
     <div class="marquee">
       * Perkiraan awal Ramadhan berdasarkan hisab. Menunggu keputusan resmi pemerintah.
@@ -132,6 +154,7 @@ footer{
 
 <script>
 function getRamadhanTime(){
+  // 19 Februari 2026
   return new Date(2026,1,19,0,0,0).getTime();
 }
 
@@ -158,10 +181,12 @@ function updateCountdown(){
 updateCountdown();
 setInterval(updateCountdown,1000);
 
-// musik autoplay
+// Autoplay musik (aktif setelah tap)
 const music = document.getElementById("bgm");
 music.play().catch(()=>{});
-document.addEventListener("click",()=>{ if(music.paused) music.play(); });
+document.addEventListener("click",()=>{
+  if(music.paused) music.play();
+});
 </script>
 
 </body>
