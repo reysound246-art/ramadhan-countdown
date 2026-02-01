@@ -1,206 +1,189 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hitung Mundur Ramadhan</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hitung Mundur Ramadhan</title>
 
-  <style>
-    body{
-      margin:0;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-      color:#fff;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-      text-align:center;
-      padding-bottom:50px; /* biar tidak ketutup running text */
-    }
+<style>
+body{
+  margin:0;
+  padding-bottom:40px;
+  font-family:'Segoe UI',Tahoma,sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+}
 
-    .card{
-      background: rgba(255,255,255,0.08);
-      padding:30px 40px;
-      border-radius:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.4);
-      max-width:420px;
-      width:100%;
-    }
+.card{
+  background:rgba(255,255,255,0.08);
+  padding:30px 40px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  max-width:420px;
+  width:100%;
+}
 
-    .logo{
-      width:90px;
-      height:auto;
-      margin-bottom:15px;
-    }
+.logo{
+  width:90px;
+  margin-bottom:15px;
+}
 
-    h1{
-      margin-bottom:10px;
-      font-size:28px;
-    }
+h1{
+  margin-bottom:10px;
+  font-size:28px;
+}
 
-    .arab{
-      font-size:22px;
-      margin-bottom:20px;
-    }
+.arab{
+  font-size:22px;
+  margin-bottom:20px;
+}
 
-    .countdown{
-      display:grid;
-      grid-template-columns: repeat(4,1fr);
-      gap:12px;
-      margin-top:20px;
-    }
+.countdown{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:20px;
+}
 
-    .box{
-      background: rgba(0,0,0,0.35);
-      border-radius:12px;
-      padding:12px 5px;
-    }
+.box{
+  background:rgba(0,0,0,0.35);
+  border-radius:12px;
+  padding:12px 5px;
+}
 
-    .number{
-      font-size:26px;
-      font-weight:bold;
-    }
+.number{
+  font-size:26px;
+  font-weight:bold;
+}
 
-    .label{
-      font-size:12px;
-      opacity:0.85;
-    }
+.label{
+  font-size:12px;
+  opacity:0.85;
+}
 
-    footer{
-      margin-top:20px;
-      font-size:12px;
-      opacity:0.7;
-    }
+footer{
+  margin-top:20px;
+  font-size:12px;
+  opacity:0.7;
+}
 
-    /* ===============================
-       RUNNING TEXT PALING BAWAH
-       =============================== */
-    .running-text{
-      position:fixed;
-      bottom:0;
-      left:0;
-      width:100%;
-      background:rgba(0,0,0,0.6);
-      overflow:hidden;
-      white-space:nowrap;
-      padding:8px 0;
-      font-size:13px;
-      z-index:999;
-    }
+/* RUNNING TEXT */
+.running-text{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:34px;
+  background:rgba(0,0,0,0.6);
+  overflow:hidden;
+  white-space:nowrap;
+  line-height:34px;
+  font-size:12px;
+  z-index:999;
+}
 
-    .marquee{
-      display:inline-block;
-      padding-left:100%;
-      animation:jalan 30s linear infinite;
-    }
+.marquee{
+  display:inline-block;
+  padding-left:100%;
+  white-space:nowrap;
+  animation:jalan 30s linear infinite;
+}
 
-    @keyframes jalan{
-      from { transform:translateX(0); }
-      to   { transform:translateX(-100%); }
-    }
-  </style>
+@keyframes jalan{
+  from{transform:translateX(0);}
+  to{transform:translateX(-100%);}
+}
+</style>
 </head>
 
 <body>
-  <div class="card">
-    <img src="logo-masjid-v2.jpg" alt="Logo Masjid" class="logo">
 
-    <!-- Musik MP3 -->
-    <audio id="bgm" src="Ramadan1.mp3" loop></audio>
+<div class="card">
+  <img src="logo-masjid-v2.jpg" class="logo" alt="Logo">
 
-    <div class="arab">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-    <h1>Menuju Ramadhan</h1>
-    <p>Hitung mundur menjelang awal puasa Ramadhan</p>
+  <!-- Musik -->
+  <audio id="bgm" src="Ramadan1.mp3" loop></audio>
 
-    <div class="countdown">
-      <div class="box">
-        <div class="number" id="days">0</div>
-        <div class="label">Hari</div>
-      </div>
-      <div class="box">
-        <div class="number" id="hours">0</div>
-        <div class="label">Jam</div>
-      </div>
-      <div class="box">
-        <div class="number" id="minutes">0</div>
-        <div class="label">Menit</div>
-      </div>
-      <div class="box">
-        <div class="number" id="seconds">0</div>
-        <div class="label">Detik</div>
-      </div>
+  <div class="arab">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+  <h1>Menuju Ramadhan</h1>
+  <p>Hitung mundur menjelang awal puasa Ramadhan</p>
+
+  <div class="countdown">
+    <div class="box">
+      <div class="number" id="days">0</div>
+      <div class="label">Hari</div>
     </div>
-
-    <footer>
-      © 2026 | perkiraan-menuju-Ramadhan-ags tech
-    </footer>
-  </div>
-
-  <!-- RUNNING TEXT -->
-  <div class="running-text">
-    <div class="marquee">
-      * Perkiraan awal Ramadhan berdasarkan hisab. Menunggu keputusan resmi pemerintah.
-      Semoga Allah SWT mempertemukan kita dengan bulan suci Ramadhan 🤲 —
-      ags tech — rumah tenaga surya — FG2 G5 no14 *
+    <div class="box">
+      <div class="number" id="hours">0</div>
+      <div class="label">Jam</div>
+    </div>
+    <div class="box">
+      <div class="number" id="minutes">0</div>
+      <div class="label">Menit</div>
+    </div>
+    <div class="box">
+      <div class="number" id="seconds">0</div>
+      <div class="label">Detik</div>
     </div>
   </div>
+
+  <footer>
+    © 2026 | perkiraan-menuju-Ramadhan-ags tech
+  </footer>
+</div>
+
+<!-- RUNNING TEXT DI LUAR CARD -->
+<div class="running-text">
+  <div class="marquee">
+    * Perkiraan awal Ramadhan berdasarkan hisab. Menunggu keputusan resmi pemerintah. Semoga Allah SWT mempertemukan kita dengan bulan suci Ramadhan 🤲 — ags tech — rumah tenaga surya — FG2 G5 no14 *
+  </div>
+</div>
 
 <script>
-  // ===============================
-  // ZONA WAKTU INDONESIA
-  // ===============================
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  let zonaLabel = "WIB";
+// ZONA WAKTU
+const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+let zona = "WIB";
+if(tz.includes("Makassar")||tz.includes("Bali")) zona="WITA";
+if(tz.includes("Jayapura")) zona="WIT";
 
-  if(userTimeZone.includes("Makassar") || userTimeZone.includes("Bali")){
-    zonaLabel = "WITA";
-  } else if(userTimeZone.includes("Jayapura")){
-    zonaLabel = "WIT";
+// TARGET RAMADHAN
+function getRamadhanTime(){
+  return new Date(2026,1,19,0,0,0).getTime();
+}
+
+function updateCountdown(){
+  const now = Date.now();
+  const d = getRamadhanTime() - now;
+
+  if(d<=0){
+    document.querySelector(".countdown").innerHTML =
+      `<h2>Marhaban ya Ramadhan 🌙<br><small>${zona}</small></h2>`;
+    return;
   }
 
-  // ===============================
-  // TANGGAL RAMADHAN
-  // ===============================
-  function getRamadhanTime(){
-    return new Date(2026, 1, 19, 0, 0, 0).getTime();
-  }
+  document.getElementById("days").innerText =
+    Math.floor(d/(1000*60*60*24));
+  document.getElementById("hours").innerText =
+    Math.floor((d%(1000*60*60*24))/(1000*60*60));
+  document.getElementById("minutes").innerText =
+    Math.floor((d%(1000*60*60))/(1000*60));
+  document.getElementById("seconds").innerText =
+    Math.floor((d%(1000*60))/1000);
+}
 
-  // ===============================
-  // COUNTDOWN
-  // ===============================
-  function updateCountdown(){
-    const now = Date.now();
-    const distance = getRamadhanTime() - now;
+updateCountdown();
+setInterval(updateCountdown,1000);
 
-    if(distance <= 0){
-      document.querySelector('.countdown').innerHTML =
-        `<h2>Marhaban ya Ramadhan 🌙<br><small>Zona ${zonaLabel}</small></h2>`;
-      return;
-    }
-
-    document.getElementById("days").innerText =
-      Math.floor(distance / (1000*60*60*24));
-    document.getElementById("hours").innerText =
-      Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-    document.getElementById("minutes").innerText =
-      Math.floor((distance % (1000*60*60)) / (1000*60));
-    document.getElementById("seconds").innerText =
-      Math.floor((distance % (1000*60)) / 1000);
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  // ===============================
-  // MUSIK AUTOPLAY
-  // ===============================
-  const music = document.getElementById('bgm');
-  music.play().catch(()=>{});
-
-  document.addEventListener('click', ()=>{
-    if(music.paused) music.play();
-  });
+// AUTOPLAY MUSIK
+const music = document.getElementById("bgm");
+music.play().catch(()=>{});
+document.addEventListener("click",()=>{ if(music.paused) music.play(); });
 </script>
+
 </body>
 </html>
