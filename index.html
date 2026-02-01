@@ -27,9 +27,53 @@ body{
   width:92%;
 }
 
-.logo{
+/* ==== LOGO + EFEK NUR ==== */
+.logo-wrap{
+  position:relative;
   width:90px;
-  margin-bottom:12px;
+  margin:0 auto 12px;
+}
+
+.logo{
+  width:100%;
+  position:relative;
+  z-index:2;
+  filter:drop-shadow(0 0 12px rgba(255,215,100,0.8));
+}
+
+/* cahaya bergerak */
+.logo-wrap::after{
+  content:"";
+  position:absolute;
+  inset:-25%;
+  background:linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255,255,255,0.9) 50%,
+    transparent 65%
+  );
+  animation:nur 3s linear infinite;
+  z-index:1;
+}
+
+@keyframes nur{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(100%)}
+}
+
+/* glow lembut */
+.logo-wrap::before{
+  content:"";
+  position:absolute;
+  inset:-15%;
+  background:radial-gradient(circle, rgba(255,215,100,0.45), transparent 70%);
+  animation:pulse 2.5s ease-in-out infinite;
+  z-index:0;
+}
+
+@keyframes pulse{
+  0%,100%{opacity:.5}
+  50%{opacity:1}
 }
 
 .arab{
@@ -85,7 +129,7 @@ footer{
   margin-top:8px;
   padding:8px 0;
   border-radius:8px;
-  font-size:13px; /* lebih besar */
+  font-size:13px;
 }
 
 .marquee{
@@ -99,7 +143,7 @@ footer{
   to{ transform:translateX(-100%); }
 }
 
-/* RESPONSIF HP KECIL */
+/* RESPONSIF */
 @media(max-width:360px){
   .number{font-size:20px;}
   .arab{font-size:20px;}
@@ -111,7 +155,11 @@ footer{
 <body>
 
 <div class="card">
-  <img src="logo-masjid-v2.jpg" class="logo" alt="Logo Masjid">
+
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <img src="logo-masjid-v2.jpg" class="logo" alt="Logo Masjid">
+  </div>
 
   <!-- Musik -->
   <audio id="bgm" src="Ramadan1.mp3" loop></audio>
@@ -121,22 +169,10 @@ footer{
   <p>Hitung mundur menjelang awal puasa Ramadhan</p>
 
   <div class="countdown">
-    <div class="box">
-      <div class="number" id="days">0</div>
-      <div class="label">Hari</div>
-    </div>
-    <div class="box">
-      <div class="number" id="hours">0</div>
-      <div class="label">Jam</div>
-    </div>
-    <div class="box">
-      <div class="number" id="minutes">0</div>
-      <div class="label">Menit</div>
-    </div>
-    <div class="box">
-      <div class="number" id="seconds">0</div>
-      <div class="label">Detik</div>
-    </div>
+    <div class="box"><div class="number" id="days">0</div><div class="label">Hari</div></div>
+    <div class="box"><div class="number" id="hours">0</div><div class="label">Jam</div></div>
+    <div class="box"><div class="number" id="minutes">0</div><div class="label">Menit</div></div>
+    <div class="box"><div class="number" id="seconds">0</div><div class="label">Detik</div></div>
   </div>
 
   <footer>
@@ -150,11 +186,11 @@ footer{
       ags tech — rumah tenaga surya — Flamboyan Garden2 G5 no14 *
     </div>
   </div>
+
 </div>
 
 <script>
 function getRamadhanTime(){
-  // 19 Februari 2026
   return new Date(2026,1,19,0,0,0).getTime();
 }
 
@@ -168,25 +204,19 @@ function updateCountdown(){
     return;
   }
 
-  document.getElementById("days").innerText =
-    Math.floor(diff / (1000*60*60*24));
-  document.getElementById("hours").innerText =
-    Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  document.getElementById("minutes").innerText =
-    Math.floor((diff%(1000*60*60))/(1000*60));
-  document.getElementById("seconds").innerText =
-    Math.floor((diff%(1000*60))/1000);
+  days.innerText    = Math.floor(diff / (1000*60*60*24));
+  hours.innerText   = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  minutes.innerText = Math.floor((diff%(1000*60*60))/(1000*60));
+  seconds.innerText = Math.floor((diff%(1000*60))/1000);
 }
 
 updateCountdown();
 setInterval(updateCountdown,1000);
 
-// Autoplay musik (aktif setelah tap)
+// Autoplay musik (HP)
 const music = document.getElementById("bgm");
 music.play().catch(()=>{});
-document.addEventListener("click",()=>{
-  if(music.paused) music.play();
-});
+document.addEventListener("click",()=>{ if(music.paused) music.play(); });
 </script>
 
 </body>
