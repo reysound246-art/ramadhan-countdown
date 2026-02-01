@@ -3,100 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menuju Ramadhan</title>
+<title>Hitung Mundur Ramadhan</title>
 
 <style>
 body{
   margin:0;
-  font-family:Segoe UI,Tahoma,sans-serif;
+  font-family:'Segoe UI',Tahoma,sans-serif;
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   color:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
   min-height:100vh;
+  text-align:center;
 }
 
 .card{
   background:rgba(255,255,255,0.08);
-  padding:25px;
-  border-radius:18px;
+  padding:28px 22px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
   max-width:420px;
   width:92%;
-  text-align:center;
-  box-shadow:0 12px 35px rgba(0,0,0,0.45);
 }
 
-/* ===== LOGO BERKILAU RAMADHAN ===== */
-.logo-wrapper{
-  position:relative;
-  max-width:280px;
-  margin:0 auto 15px;
-  border-radius:16px;
-  overflow:hidden;
+.logo{
+  width:90px;
+  margin-bottom:12px;
 }
 
-.logo-wrapper img{
-  width:100%;
-  display:block;
-  border-radius:16px;
-}
-
-/* Cahaya nur menyapu */
-.shine{
-  position:absolute;
-  top:-50%;
-  left:-150%;
-  width:120%;
-  height:200%;
-  background:linear-gradient(
-    120deg,
-    transparent 35%,
-    rgba(255,255,220,0.75),
-    transparent 65%
-  );
-  animation:shineMove 3.5s linear infinite;
-}
-
-/* Kilau bintang */
-.sparkle{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 2px),
-    radial-gradient(circle, rgba(255,255,200,0.7) 1px, transparent 2px);
-  background-size:30px 30px, 45px 45px;
-  animation:sparkleTwinkle 2.5s ease-in-out infinite alternate;
-  pointer-events:none;
-}
-
-@keyframes shineMove{
-  0%{ left:-150%; }
-  100%{ left:150%; }
-}
-
-@keyframes sparkleTwinkle{
-  from{ opacity:0.25; }
-  to{ opacity:0.65; }
-}
-
-/* ===== TEKS ===== */
 .arab{
   font-size:22px;
-  margin:10px 0;
+  margin-bottom:12px;
 }
 
 h1{
   font-size:26px;
-  margin:5px 0;
+  margin-bottom:6px;
 }
 
 p{
   font-size:14px;
-  opacity:0.85;
+  opacity:0.9;
 }
 
-/* ===== COUNTDOWN ===== */
 .countdown{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -107,7 +57,7 @@ p{
 .box{
   background:rgba(0,0,0,0.35);
   border-radius:12px;
-  padding:10px 5px;
+  padding:12px 6px;
 }
 
 .number{
@@ -117,24 +67,31 @@ p{
 
 .label{
   font-size:12px;
-  opacity:0.8;
+  opacity:0.85;
 }
 
-/* ===== RUNNING TEXT ===== */
+footer{
+  margin-top:16px;
+  font-size:12px;
+  opacity:0.75;
+}
+
+/* RUNNING TEXT */
 .running-text{
-  margin-top:15px;
+  width:100%;
   background:rgba(0,0,0,0.35);
   overflow:hidden;
   white-space:nowrap;
-  border-radius:10px;
-  padding:7px 0;
-  font-size:13px;
+  margin-top:8px;
+  padding:8px 0;
+  border-radius:8px;
+  font-size:13px; /* lebih besar */
 }
 
 .marquee{
   display:inline-block;
   padding-left:100%;
-  animation:jalan 25s linear infinite;
+  animation:jalan 22s linear infinite;
 }
 
 @keyframes jalan{
@@ -142,11 +99,11 @@ p{
   to{ transform:translateX(-100%); }
 }
 
-/* RESPONSIF */
-@media(max-width:600px){
-  h1{font-size:22px;}
-  .arab{font-size:20px;}
+/* RESPONSIF HP KECIL */
+@media(max-width:360px){
   .number{font-size:20px;}
+  .arab{font-size:20px;}
+  h1{font-size:24px;}
 }
 </style>
 </head>
@@ -154,19 +111,15 @@ p{
 <body>
 
 <div class="card">
+  <img src="logo-masjid-v2.jpg" class="logo" alt="Logo Masjid">
 
-  <!-- LOGO MASJID ASLI -->
-  <div class="logo-wrapper">
-    <img src="logo-masjid-v2.jpg" alt="DKM AR-RAUDHOH">
-    <div class="shine"></div>
-    <div class="sparkle"></div>
-  </div>
+  <!-- Musik -->
+  <audio id="bgm" src="Ramadan1.mp3" loop></audio>
 
   <div class="arab">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
   <h1>Menuju Ramadhan</h1>
   <p>Hitung mundur menjelang awal puasa Ramadhan</p>
 
-  <!-- COUNTDOWN -->
   <div class="countdown">
     <div class="box">
       <div class="number" id="days">0</div>
@@ -186,20 +139,22 @@ p{
     </div>
   </div>
 
-  <!-- RUNNING TEXT -->
+  <footer>
+    © 2026 | perkiraan-menuju-Ramadhan-ags tech
+  </footer>
+
   <div class="running-text">
     <div class="marquee">
-      ✨ Perkiraan awal Ramadhan berdasarkan hisab — menunggu keputusan resmi pemerintah —
+      * Perkiraan awal Ramadhan berdasarkan hisab. Menunggu keputusan resmi pemerintah.
       Semoga Allah SWT mempertemukan kita dengan bulan suci Ramadhan 🤲 —
-      DKM AR-RAUDHOH — AGS TECH ✨
+      ags tech — rumah tenaga surya — Flamboyan Garden2 G5 no14 *
     </div>
   </div>
-
 </div>
 
 <script>
 function getRamadhanTime(){
-  // 19 Februari 2026 (silakan ubah jika perlu)
+  // 19 Februari 2026
   return new Date(2026,1,19,0,0,0).getTime();
 }
 
@@ -208,8 +163,8 @@ function updateCountdown(){
   const diff = getRamadhanTime() - now;
 
   if(diff <= 0){
-    document.querySelector(".countdown").innerHTML =
-      "<h2>🌙 Marhaban ya Ramadhan 🌙</h2>";
+    document.querySelector('.countdown').innerHTML =
+      '<h2>Marhaban ya Ramadhan 🌙</h2>';
     return;
   }
 
@@ -225,6 +180,13 @@ function updateCountdown(){
 
 updateCountdown();
 setInterval(updateCountdown,1000);
+
+// Autoplay musik (aktif setelah tap)
+const music = document.getElementById("bgm");
+music.play().catch(()=>{});
+document.addEventListener("click",()=>{
+  if(music.paused) music.play();
+});
 </script>
 
 </body>
