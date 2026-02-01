@@ -3,50 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hitung Mundur Ramadhan</title>
+<title>Menuju Ramadhan</title>
 
 <style>
+/* ===== VIDEO BACKGROUND ===== */
+.video-bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  z-index:-2;
+}
+
+.video-bg video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:blur(4px) brightness(0.45);
+}
+
+/* overlay gradasi */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(
+    135deg,
+    rgba(15,32,39,0.75),
+    rgba(32,58,67,0.75),
+    rgba(44,83,100,0.75)
+  );
+  z-index:-1;
+}
+
+/* ===== BODY ===== */
 body{
   margin:0;
-  font-family:'Segoe UI',Tahoma,sans-serif;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  font-family:Segoe UI,Tahoma,sans-serif;
   color:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
   min-height:100vh;
-  text-align:center;
 }
 
+/* ===== CARD ===== */
 .card{
-  background:rgba(255,255,255,0.08);
-  padding:28px 22px;
-  border-radius:16px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  background:rgba(255,255,255,0.1);
+  padding:25px;
+  border-radius:18px;
   max-width:420px;
   width:92%;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.5);
+  backdrop-filter:blur(6px);
 }
 
-.logo{
-  width:90px;
-  margin-bottom:12px;
+/* ===== LOGO BERKILAU ===== */
+.logo-wrapper{
+  position:relative;
+  max-width:280px;
+  margin:0 auto 15px;
+  border-radius:16px;
+  overflow:hidden;
 }
 
-.arab{
-  font-size:22px;
-  margin-bottom:12px;
+.logo-wrapper img{
+  width:100%;
+  display:block;
+  border-radius:16px;
 }
 
-h1{
-  font-size:26px;
-  margin-bottom:6px;
+.shine{
+  position:absolute;
+  top:-50%;
+  left:-150%;
+  width:120%;
+  height:200%;
+  background:linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255,255,220,0.8),
+    transparent 65%
+  );
+  animation:shineMove 3.5s linear infinite;
 }
 
-p{
-  font-size:14px;
-  opacity:0.9;
+.sparkle{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,200,0.6) 1px, transparent 2px);
+  background-size:30px 30px, 45px 45px;
+  animation:sparkle 2.5s ease-in-out infinite alternate;
 }
 
+@keyframes shineMove{
+  from{left:-150%;}
+  to{left:150%;}
+}
+
+@keyframes sparkle{
+  from{opacity:0.2;}
+  to{opacity:0.6;}
+}
+
+/* ===== TEKS ===== */
+.arab{font-size:22px;margin:10px 0;}
+h1{font-size:26px;margin:5px 0;}
+p{font-size:14px;opacity:0.85;}
+
+/* ===== COUNTDOWN ===== */
 .countdown{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -55,106 +124,87 @@ p{
 }
 
 .box{
-  background:rgba(0,0,0,0.35);
+  background:rgba(0,0,0,0.4);
   border-radius:12px;
-  padding:12px 6px;
+  padding:10px 5px;
 }
 
-.number{
-  font-size:24px;
-  font-weight:bold;
-}
+.number{font-size:24px;font-weight:bold;}
+.label{font-size:12px;opacity:0.8;}
 
-.label{
-  font-size:12px;
-  opacity:0.85;
-}
-
-footer{
-  margin-top:16px;
-  font-size:12px;
-  opacity:0.75;
-}
-
-/* RUNNING TEXT */
+/* ===== RUNNING TEXT ===== */
 .running-text{
-  width:100%;
-  background:rgba(0,0,0,0.35);
+  margin-top:15px;
+  background:rgba(0,0,0,0.45);
   overflow:hidden;
   white-space:nowrap;
-  margin-top:8px;
-  padding:8px 0;
-  border-radius:8px;
-  font-size:13px; /* lebih besar */
+  border-radius:10px;
+  padding:7px 0;
+  font-size:13px;
 }
 
 .marquee{
   display:inline-block;
   padding-left:100%;
-  animation:jalan 22s linear infinite;
+  animation:jalan 25s linear infinite;
 }
 
 @keyframes jalan{
-  from{ transform:translateX(0); }
-  to{ transform:translateX(-100%); }
+  from{transform:translateX(0);}
+  to{transform:translateX(-100%);}
 }
 
-/* RESPONSIF HP KECIL */
-@media(max-width:360px){
-  .number{font-size:20px;}
+/* RESPONSIF */
+@media(max-width:600px){
+  h1{font-size:22px;}
   .arab{font-size:20px;}
-  h1{font-size:24px;}
+  .number{font-size:20px;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <img src="masjid3.png" class="logo" alt="Logo Masjid">
+<!-- VIDEO BACKGROUND -->
+<div class="video-bg">
+  <video autoplay muted loop playsinline>
+    <source src="ramadhan-bg.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="overlay"></div>
 
-  <!-- Musik -->
-  <audio id="bgm" src="Ramadan1.mp3" loop></audio>
+<!-- KONTEN -->
+<div class="card">
+
+  <div class="logo-wrapper">
+    <img src="logo-masjid.png" alt="DKM AR-RAUDHOH">
+    <div class="shine"></div>
+    <div class="sparkle"></div>
+  </div>
 
   <div class="arab">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
   <h1>Menuju Ramadhan</h1>
   <p>Hitung mundur menjelang awal puasa Ramadhan</p>
 
   <div class="countdown">
-    <div class="box">
-      <div class="number" id="days">0</div>
-      <div class="label">Hari</div>
-    </div>
-    <div class="box">
-      <div class="number" id="hours">0</div>
-      <div class="label">Jam</div>
-    </div>
-    <div class="box">
-      <div class="number" id="minutes">0</div>
-      <div class="label">Menit</div>
-    </div>
-    <div class="box">
-      <div class="number" id="seconds">0</div>
-      <div class="label">Detik</div>
-    </div>
+    <div class="box"><div class="number" id="days">0</div><div class="label">Hari</div></div>
+    <div class="box"><div class="number" id="hours">0</div><div class="label">Jam</div></div>
+    <div class="box"><div class="number" id="minutes">0</div><div class="label">Menit</div></div>
+    <div class="box"><div class="number" id="seconds">0</div><div class="label">Detik</div></div>
   </div>
-
-  <footer>
-    © 2026 | perkiraan-menuju-Ramadhan-ags tech
-  </footer>
 
   <div class="running-text">
     <div class="marquee">
-      * Perkiraan awal Ramadhan berdasarkan hisab. Menunggu keputusan resmi pemerintah.
+      ✨ Perkiraan awal Ramadhan berdasarkan hisab — menunggu keputusan resmi pemerintah —
       Semoga Allah SWT mempertemukan kita dengan bulan suci Ramadhan 🤲 —
-      ags tech — rumah tenaga surya — Flamboyan Garden2 G5 no14 *
+      DKM AR-RAUDHOH — AGS TECH ✨
     </div>
   </div>
+
 </div>
 
 <script>
 function getRamadhanTime(){
-  // 19 Februari 2026
   return new Date(2026,1,19,0,0,0).getTime();
 }
 
@@ -163,8 +213,8 @@ function updateCountdown(){
   const diff = getRamadhanTime() - now;
 
   if(diff <= 0){
-    document.querySelector('.countdown').innerHTML =
-      '<h2>Marhaban ya Ramadhan 🌙</h2>';
+    document.querySelector(".countdown").innerHTML =
+      "<h2>🌙 Marhaban ya Ramadhan 🌙</h2>";
     return;
   }
 
@@ -180,13 +230,6 @@ function updateCountdown(){
 
 updateCountdown();
 setInterval(updateCountdown,1000);
-
-// Autoplay musik (aktif setelah tap)
-const music = document.getElementById("bgm");
-music.play().catch(()=>{});
-document.addEventListener("click",()=>{
-  if(music.paused) music.play();
-});
 </script>
 
 </body>
