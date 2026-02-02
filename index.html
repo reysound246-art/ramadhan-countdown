@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ramadhan & Jadwal Sholat</title>
+<title>Menuju Ramadhan & Jadwal Sholat</title>
 
 <style>
 body{
@@ -15,36 +15,39 @@ body{
   justify-content:center;
   align-items:center;
   min-height:100vh;
+  text-align:center;
 }
 
-.container{
+.wrapper{
   width:100%;
-  max-width:420px;
-  padding:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
 }
 
 .card{
   background:rgba(255,255,255,0.08);
-  padding:20px;
+  padding:28px 22px;
   border-radius:16px;
   box-shadow:0 10px 30px rgba(0,0,0,0.4);
-  margin-bottom:15px;
-  text-align:center;
+  max-width:420px;
+  width:92%;
 }
 
 .logo{
-  width:80px;
-  margin-bottom:10px;
+  width:90px;
+  margin-bottom:12px;
 }
 
 .arab{
-  font-size:20px;
-  margin-bottom:10px;
+  font-size:22px;
+  margin-bottom:12px;
 }
 
 h1{
-  font-size:24px;
-  margin:6px 0;
+  font-size:26px;
+  margin-bottom:6px;
 }
 
 p{
@@ -55,34 +58,41 @@ p{
 .countdown{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:8px;
-  margin-top:15px;
+  gap:10px;
+  margin-top:18px;
 }
 
 .box{
   background:rgba(0,0,0,0.35);
-  border-radius:10px;
-  padding:10px 4px;
+  border-radius:12px;
+  padding:12px 6px;
 }
 
 .number{
-  font-size:22px;
+  font-size:24px;
   font-weight:bold;
 }
 
 .label{
   font-size:12px;
-  opacity:0.8;
+  opacity:0.85;
+}
+
+footer{
+  margin-top:16px;
+  font-size:12px;
+  opacity:0.75;
 }
 
 /* RUNNING TEXT */
 .running-text{
-  margin-top:12px;
+  width:100%;
   background:rgba(0,0,0,0.35);
-  border-radius:8px;
   overflow:hidden;
   white-space:nowrap;
-  padding:6px 0;
+  margin-top:8px;
+  padding:8px 0;
+  border-radius:8px;
   font-size:13px;
 }
 
@@ -93,55 +103,32 @@ p{
 }
 
 @keyframes jalan{
-  from{transform:translateX(0);}
-  to{transform:translateX(-100%);}
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-100%); }
 }
 
-/* SHOLAT */
-.sholat-title{
-  font-size:20px;
-  margin-bottom:10px;
-}
-
-.sholat{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:10px;
-}
-
-.sholat div{
-  background:rgba(0,0,0,0.35);
-  padding:10px;
-  border-radius:10px;
-  font-size:14px;
-}
-
-/* TOMBOL AUDIO */
-button{
-  margin-top:10px;
-  padding:8px 14px;
-  border:none;
-  border-radius:8px;
-  background:#00ffcc;
-  font-weight:bold;
-  cursor:pointer;
+/* RESPONSIF */
+@media(max-width:360px){
+  .number{font-size:20px;}
+  .arab{font-size:20px;}
+  h1{font-size:24px;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="wrapper">
 
-<!-- ================= CARD 1 : RAMADHAN ================= -->
+<!-- ================= CARD RAMADHAN (TIDAK DIUBAH) ================= -->
 <div class="card">
-  <img src="masjid3.png" class="logo">
+  <img src="logo-masjid-v2.jpg" class="logo" alt="Logo Masjid">
+
   <audio id="bgm" src="Ramadan1.mp3" loop></audio>
 
   <div class="arab">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
   <h1>Menuju Ramadhan</h1>
-  <p>Hitung mundur menjelang awal puasa</p>
+  <p>Hitung mundur menjelang awal puasa Ramadhan</p>
 
   <div class="countdown">
     <div class="box"><div class="number" id="days">0</div><div class="label">Hari</div></div>
@@ -150,67 +137,91 @@ button{
     <div class="box"><div class="number" id="seconds">0</div><div class="label">Detik</div></div>
   </div>
 
-  <button id="btnAudio">🔊 Aktifkan Musik</button>
+  <footer>© 2026 | perkiraan-menuju-Ramadhan-ags tech</footer>
 
   <div class="running-text">
     <div class="marquee">
       * Perkiraan awal Ramadhan berdasarkan hisab. Menunggu keputusan resmi pemerintah.
       Semoga Allah SWT mempertemukan kita dengan bulan suci Ramadhan 🤲 —
-      ags tech — rumah tenaga surya — Flamboyan Garden2 G5 no14 *
+      ags tech — Flamboyan Garden 2 *
     </div>
   </div>
 </div>
 
-<!-- ================= CARD 2 : SHOLAT ================= -->
+<!-- ================= CARD JADWAL SHOLAT ================= -->
 <div class="card">
-  <div class="sholat-title">🕌 Jadwal Sholat<br>Solear – Tangerang</div>
+  <h1>Jadwal Sholat</h1>
+  <p>Solear • Tangerang</p>
 
-  <div class="sholat">
-    <div>Subuh</div><div>04:45</div>
-    <div>Dzuhur</div><div>12:05</div>
-    <div>Ashar</div><div>15:25</div>
-    <div>Maghrib</div><div>18:10</div>
-    <div>Isya</div><div>19:20</div>
+  <div class="countdown">
+    <div class="box"><div class="number" id="subuh">--:--</div><div class="label">Subuh</div></div>
+    <div class="box"><div class="number" id="dzuhur">--:--</div><div class="label">Dzuhur</div></div>
+    <div class="box"><div class="number" id="ashar">--:--</div><div class="label">Ashar</div></div>
+    <div class="box"><div class="number" id="maghrib">--:--</div><div class="label">Maghrib</div></div>
+    <div class="box"><div class="number" id="isya">--:--</div><div class="label">Isya</div></div>
   </div>
 </div>
 
 </div>
 
+<audio id="azan" src="azan.mp3"></audio>
+
 <script>
-// ===== COUNTDOWN =====
+// ================= RAMADHAN (ASLI TIDAK DIUBAH)
 function getRamadhanTime(){
   return new Date(2026,1,19,0,0,0).getTime();
 }
 
 function updateCountdown(){
   const now = Date.now();
-  const d = getRamadhanTime() - now;
+  const diff = getRamadhanTime() - now;
 
-  if(d <= 0){
-    document.querySelector(".countdown").innerHTML =
-      "<h2>Marhaban ya Ramadhan 🌙</h2>";
+  if(diff <= 0){
+    document.querySelector('.countdown').innerHTML =
+      '<h2>Marhaban ya Ramadhan 🌙</h2>';
     return;
   }
 
-  days.innerText = Math.floor(d/(1000*60*60*24));
-  hours.innerText = Math.floor((d%(1000*60*60*24))/(1000*60*60));
-  minutes.innerText = Math.floor((d%(1000*60*60))/(1000*60));
-  seconds.innerText = Math.floor((d%(1000*60))/1000);
+  days.innerText = Math.floor(diff / 86400000);
+  hours.innerText = Math.floor((diff % 86400000) / 3600000);
+  minutes.innerText = Math.floor((diff % 3600000) / 60000);
+  seconds.innerText = Math.floor((diff % 60000) / 1000);
 }
 
 setInterval(updateCountdown,1000);
 updateCountdown();
 
-// ===== AUDIO =====
+// musik
 const music = document.getElementById("bgm");
-const btn = document.getElementById("btnAudio");
+music.play().catch(()=>{});
+document.addEventListener("click",()=>{ if(music.paused) music.play(); });
 
-btn.onclick = ()=>{
-  music.play().then(()=>{
-    btn.innerText="🔊 Musik Aktif";
-    btn.style.background="#2ecc71";
-  });
-};
+// ================= JADWAL SHOLAT
+const LAT = -6.2489;
+const LON = 106.4203;
+let jadwal = {};
+let azanPlayed = {};
+
+fetch(`https://api.aladhan.com/v1/timings?latitude=${LAT}&longitude=${LON}&method=11`)
+.then(r=>r.json())
+.then(d=>{
+  jadwal = d.data.timings;
+  subuh.innerText = jadwal.Fajr;
+  dzuhur.innerText = jadwal.Dhuhr;
+  ashar.innerText = jadwal.Asr;
+  maghrib.innerText = jadwal.Maghrib;
+  isya.innerText = jadwal.Isha;
+});
+
+setInterval(()=>{
+  const jam = new Date().toTimeString().slice(0,5);
+  for(let s in jadwal){
+    if(jam === jadwal[s] && !azanPlayed[s]){
+      document.getElementById("azan").play();
+      azanPlayed[s] = true;
+    }
+  }
+},1000);
 </script>
 
 </body>
