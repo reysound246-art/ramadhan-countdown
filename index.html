@@ -11,10 +11,10 @@ body{
   font-family:'Segoe UI',Tahoma,sans-serif;
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   color:#fff;
-  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
+  min-height:100vh;
 }
 
 .wrapper{
@@ -23,9 +23,10 @@ body{
   flex-direction:column;
   align-items:center;
   gap:18px;
+  padding:20px 0;
 }
 
-/* CARD */
+/* ===== CARD UMUM ===== */
 .card{
   background:rgba(255,255,255,0.08);
   padding:26px 22px;
@@ -43,12 +44,12 @@ body{
 
 .arab{
   font-size:22px;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 
 h1{
   font-size:26px;
-  margin:6px 0;
+  margin-bottom:6px;
 }
 
 p{
@@ -56,7 +57,7 @@ p{
   opacity:0.9;
 }
 
-/* COUNTDOWN */
+/* ===== COUNTDOWN ===== */
 .countdown{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -86,13 +87,13 @@ footer{
   opacity:0.75;
 }
 
-/* RUNNING TEXT */
+/* ===== RUNNING TEXT ===== */
 .running-text{
   width:100%;
   background:rgba(0,0,0,0.35);
   overflow:hidden;
   white-space:nowrap;
-  margin-top:10px;
+  margin-top:8px;
   padding:8px 0;
   border-radius:8px;
   font-size:13px;
@@ -109,14 +110,13 @@ footer{
   to{transform:translateX(-100%);}
 }
 
-/* JADWAL SHOLAT */
-.jadwal{
-  margin-top:10px;
-}
+/* ===== JADWAL SHOLAT ===== */
+.jadwal{margin-top:10px;}
 
 .row{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   background:rgba(0,0,0,0.35);
   padding:12px 14px;
   border-radius:10px;
@@ -126,6 +126,21 @@ footer{
 
 .row span{
   font-weight:bold;
+  font-size:17px;
+}
+
+/* ===== VIDEO CARD ===== */
+.video-box{
+  width:100%;
+  overflow:hidden;
+  border-radius:12px;
+  margin-top:10px;
+}
+
+.video-box video{
+  width:100%;
+  height:auto;
+  border-radius:12px;
 }
 
 /* RESPONSIF */
@@ -141,9 +156,10 @@ footer{
 
 <div class="wrapper">
 
-<!-- CARD RAMADHAN -->
+<!-- ===== CARD RAMADHAN ===== -->
 <div class="card">
   <img src="logo-masjid-v2.jpg" class="logo">
+
   <audio id="bgm" src="Ramadan1.mp3" loop></audio>
 
   <div class="arab">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
@@ -167,10 +183,10 @@ footer{
   </div>
 </div>
 
-<!-- CARD JADWAL SHOLAT -->
+<!-- ===== CARD JADWAL SHOLAT ===== -->
 <div class="card">
   <h1>Jadwal Sholat</h1>
-  <p>Solear, Tangerang</p>
+  <p>Solear – Tangerang</p>
 
   <div class="jadwal">
     <div class="row">Subuh <span id="subuh">--:--</span></div>
@@ -181,12 +197,22 @@ footer{
   </div>
 </div>
 
+<!-- ===== CARD VIDEO (BARU) ===== -->
+<div class="card">
+  <h1>Video Ramadhan</h1>
+  <p>Tadabbur & Nuansa Ramadhan</p>
+
+  <div class="video-box">
+    <video src="video.mp4" autoplay muted loop playsinline></video>
+  </div>
+</div>
+
 </div>
 
 <audio id="azan" src="azan.mp3"></audio>
 
 <script>
-// ================= COUNTDOWN RAMADHAN =================
+// ===== COUNTDOWN RAMADHAN =====
 function getRamadhanTime(){
   return new Date(2026,1,19,0,0,0).getTime();
 }
@@ -201,49 +227,38 @@ function updateCountdown(){
   minutes.innerText = Math.floor((diff % 3600000) / 60000);
   seconds.innerText = Math.floor((diff % 60000) / 1000);
 }
-setInterval(updateCountdown,1000);
-updateCountdown();
 
-// ================= MUSIK RAMADHAN =================
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+// ===== MUSIK =====
 const music = document.getElementById("bgm");
 music.play().catch(()=>{});
 document.addEventListener("click",()=>{ if(music.paused) music.play(); });
 
-// ================= JADWAL SHOLAT + AZAN =================
+// ===== JADWAL SHOLAT & AZAN =====
 const LAT = -6.2489;
 const LON = 106.4203;
-const azanAudio = document.getElementById("azan");
-
-const today = new Date().toISOString().slice(0,10);
-let azanStatus = JSON.parse(localStorage.getItem("azanStatus")) || {};
-
-if(azanStatus.date !== today){
-  azanStatus = { date: today };
-  localStorage.setItem("azanStatus", JSON.stringify(azanStatus));
-}
-
 let jadwal = {};
+let azanPlayed = {};
 
 fetch(`https://api.aladhan.com/v1/timings?latitude=${LAT}&longitude=${LON}&method=11`)
 .then(r=>r.json())
 .then(d=>{
   jadwal = d.data.timings;
-  subuh.innerText    = jadwal.Fajr;
-  dzuhur.innerText   = jadwal.Dhuhr;
-  ashar.innerText    = jadwal.Asr;
+  subuh.innerText = jadwal.Fajr;
+  dzuhur.innerText = jadwal.Dhuhr;
+  ashar.innerText = jadwal.Asr;
   maghrib.innerText = jadwal.Maghrib;
-  isya.innerText     = jadwal.Isha;
+  isya.innerText = jadwal.Isha;
 });
 
 setInterval(()=>{
   const jam = new Date().toTimeString().slice(0,5);
-  const map = {Fajr:"subuh",Dhuhr:"dzuhur",Asr:"ashar",Maghrib:"maghrib",Isha:"isya"};
-
-  for(let k in map){
-    if(jam === jadwal[k] && !azanStatus[k]){
-      azanAudio.play().catch(()=>{});
-      azanStatus[k] = true;
-      localStorage.setItem("azanStatus", JSON.stringify(azanStatus));
+  for(let s in jadwal){
+    if(jam === jadwal[s] && !azanPlayed[s]){
+      document.getElementById("azan").play();
+      azanPlayed[s] = true;
     }
   }
 },1000);
