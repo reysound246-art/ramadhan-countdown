@@ -172,25 +172,59 @@ footer{
   </div>
 </div>
 
-<!-- ================= CARD JADWAL SHOLAT (MODEL WEB SEBELUMNYA) ================= -->
-<div class="card">
-  <h1>Jadwal Sholat</h1>
-  <p> Tangerang</p>
-
-  <div class="jadwal">
-    <div class="row">Subuh <span id="subuh">--:--</span></div>
-    <div class="row">Dzuhur <span id="dzuhur">--:--</span></div>
-    <div class="row">Ashar <span id="ashar">--:--</span></div>
-    <div class="row">Maghrib <span id="maghrib">--:--</span></div>
-    <div class="row">Isya <span id="isya">--:--</span></div>
-  </div>
-</div>
-
-</div>
-
-<audio id="azan" src="azan.mp3"></audio>
-
 <script>
+// ================= JADWAL SHOLAT & AZAN OTOMATIS (ANTI ULANG) =================
+const LAT = -6.2489;
+const LON = 106.4203;
+
+const azanAudio = document.getElementById("azan");
+let jadwal = {};
+
+// key penyimpanan harian
+const todayKey = new Date().toISOString().slice(0,10);
+let azanStatus = JSON.parse(localStorage.getItem("azanStatus")) || {};
+
+// reset otomatis kalau ganti hari
+if(azanStatus.date !== todayKey){
+  azanStatus = { date: todayKey };
+  localStorage.setItem("azanStatus", JSON.stringify(azanStatus));
+}
+
+// ambil jadwal sholat
+fetch(`https://api.aladhan.com/v1/timings?latitude=${LAT}&longitude=${LON}&method=11`)
+.then(res => res.json())
+.then(data => {
+  jadwal = data.data.timings;
+
+  subuh.innerText    = jadwal.Fajr;
+  dzuhur.innerText   = jadwal.Dhuhr;
+  ashar.innerText    = jadwal.Asr;
+  maghrib.innerText = jadwal.Maghrib;
+  isya.innerText     = jadwal.Isha;
+});
+
+// cek waktu tiap detik
+setInterval(()=>{
+  const now = new Date();
+  const jam = now.toTimeString().slice(0,5);
+
+  const waktuSholat = {
+    Fajr: "subuh",
+    Dhuhr: "dzuhur",
+    Asr: "ashar",
+    Maghrib: "maghrib",
+    Isha: "isya"
+  };
+
+  for(let key in waktuSholat){
+    if(jam === jadwal[key] && !azanStatus[key]){
+      azanAudio.play().catch(()=>{});
+      azanStatus[key] = true;
+      localStorage.setItem("azanStatus", JSON.stringify(azanStatus));
+    }
+  }
+},1000);
+</script>
 // ================= RAMADHAN
 function getRamadhanTime(){
   return new Date(2026,1,19,0,0,0).getTime();
